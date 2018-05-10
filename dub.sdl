@@ -1,0 +1,8 @@
+name "hellorest"
+description "A minial REST server."
+authors "Kai Nacke"
+copyright "Copyright © 2018, Kai Nacke"
+license "proprietary"
+dependency "vibe-d" version="~>0.8.3"
+versions "VibeDefaultMain"
+
