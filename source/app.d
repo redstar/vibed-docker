@@ -1,6 +1,7 @@
 import vibe.d;
 import std.conv : to;
 import std.process : environment;
+import std.typecons : Nullable;
 
 shared static this()
 {
@@ -28,7 +29,8 @@ interface Hello
 {
     @method(HTTPMethod.GET)
     @path("hello")
-    Json hello();
+    @queryParam("name", "name")
+    Msg hello(Nullable!string name);
 
     @method(HTTPMethod.GET)
     @path("healthz")
@@ -37,11 +39,10 @@ interface Hello
 
 class HelloImpl : Hello
 {
-    Json hello() @safe
+    Msg hello(Nullable!string name) @safe
     {
         logInfo("hello called");
-        auto msg = Msg("Hello visitor");
-        return serializeToJson(msg);
+        return Msg(format("Hello %s", name.isNull ? "visitor" : name));
     }
 
     string healthz() @safe
