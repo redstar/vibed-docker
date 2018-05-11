@@ -21,14 +21,14 @@ shared static this()
 
     listenHTTP(settings, router);
 
-    logInfo("Please open http://%s:%d/ in your browser.", host, port);
+    logInfo("Please open http://%s:%d/hello in your browser.", host, port);
 }
 
 interface Hello
 {
     @method(HTTPMethod.GET)
     @path("hello")
-    string hello();
+    Json hello();
 
     @method(HTTPMethod.GET)
     @path("healthz")
@@ -37,14 +37,21 @@ interface Hello
 
 class HelloImpl : Hello
 {
-    string hello() @safe
+    Json hello() @safe
     {
-        return "Hello visitor!";
+        logInfo("hello called");
+        auto msg = Msg("Hello visitor");
+        return serializeToJson(msg);
     }
 
     string healthz() @safe
     {
+        logInfo("healthz called");
         return "OK";
     }
 }
 
+struct Msg
+{
+    string msg;
+}
