@@ -9,8 +9,8 @@ shared static this()
     foreach(k, v; env)
         logInfo("%s = %s", k, v);
 
-    auto host = environment.get("HELLO_HOST", "127.0.0.1");
-    auto port = to!ushort(environment.get("HELLO_PORT", "8080"));
+    auto host = environment.get("HELLO_HOST", "0.0.0.0");
+    auto port = to!ushort(environment.get("HELLO_PORT", "17890"));
 
     auto router = new URLRouter;
     router.registerRestInterface(new HelloImpl());
