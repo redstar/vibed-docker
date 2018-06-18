@@ -1,5 +1,5 @@
 name "hellorest"
-description "A minial REST server."
+description "A minimal REST server."
 authors "Kai Nacke"
 copyright "Copyright © 2018, Kai Nacke"
 license "proprietary"
