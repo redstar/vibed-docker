@@ -8,4 +8,6 @@ RUN \
 
 COPY hellorest /
 
-CMD /hellorest
+USER nobody
+
+ENTRYPOINT ["/hellorest"]
