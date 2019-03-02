@@ -1,0 +1,25 @@
+FROM ubuntu:cosmic AS build
+
+RUN \
+  apt-get update && \
+  apt-get install -y ldc gcc dub zlib1g-dev libssl-dev && \
+  rm -rf /var/lib/apt/lists/*
+
+COPY . /tmp
+
+WORKDIR /tmp
+
+RUN dub -v build
+
+FROM ubuntu:cosmic
+
+RUN \
+  apt-get update && \
+  apt-get install -y libphobos2-ldc-shared81 zlib1g libssl1.1 && \
+  rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /tmp/hellorest /
+
+USER nobody
+
+ENTRYPOINT ["/hellorest"]
