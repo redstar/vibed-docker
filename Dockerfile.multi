@@ -2,14 +2,17 @@ FROM ubuntu:cosmic AS build
 
 RUN \
   apt-get update && \
-  apt-get install -y ldc gcc dub zlib1g-dev libssl-dev && \
+  apt-get install -y xz-utils gpg curl ldc gcc dub zlib1g-dev libssl-dev && \
   rm -rf /var/lib/apt/lists/*
+
+RUN \
+  curl -fsS https://dlang.org/install.sh | bash -s install dmd-2.085.1
 
 COPY . /tmp
 
 WORKDIR /tmp
 
-RUN dub -v build
+RUN . ~/dlang/dmd-2.085.1/activate && dub -v build
 
 FROM ubuntu:cosmic
 
